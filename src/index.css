@@ -3,9 +3,17 @@
 @tailwind utilities;
 
 body {
-    background-color: #000;
+  background-color: #000;
+  color: #fff;
 }
 
 #tasklist::-webkit-scrollbar {
-    display: none;
+  display: none;
+}
+
+#allTaskList::-webkit-scrollbar {
+  display: none;
+}
+#allTask::-webkit-scrollbar {
+  display: none;
 }
