@@ -10,11 +10,11 @@ const AuthProvider = ({ children }) => {
     setUserData({ employees, admin });
   }, []);
 
-  const data = getLocalStorage();
-
   return (
     <div>
-      <AuthContext.Provider value={userData}>{children}</AuthContext.Provider>
+      <AuthContext.Provider value={[userData, setUserData]}>
+        {children}
+      </AuthContext.Provider>
     </div>
   );
 };

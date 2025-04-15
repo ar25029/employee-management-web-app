@@ -1,36 +1,39 @@
 import React, { useState } from "react";
 
 const CreateTask = () => {
-  const [taskTitle, setTaskTitle] = useState("");
+  const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [assignTo, setAssignTo] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
+  const [task, setTask] = useState({});
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const taskData = {
-    //   title: taskTitle,
-    //   date: date,
-    //   assignTo: assignTo,
-    //   category: category,
-    //   description: description,
-    // };
-    // const empData = JSON.parse(localStorage.getItem("employees"));
-    // const newTask = {
-    //   ...taskData,
-    //   active: true,
-    //   newTask: true,
-    //   completed: false,
-    //   failed: false,
-    // };
-    // localStorage.setItem("employees", JSON.stringify(empData));
-    // empData.forEach((emp) => {
-    //   if (emp.name === assignTo) {
-    //     emp.tasks.push(newTask);
-    //     emp.taskCount.newTask += 1;
-    //     emp.taskCount.active += 1;
-    //   }
-    // });
+    setTask({
+      active: false,
+      category: category,
+      completed: false,
+      date: date,
+      description: description,
+      failed: false,
+      newTask: true,
+      title: title,
+    });
+
+    const data = JSON.parse(localStorage.getItem("employees"));
+
+    data.map((ele) => {
+      if (assignTo == ele.name) {
+        ele.tasks.push(task);
+        console.log(ele);
+      }
+    });
+
+    setDate("");
+    setAssignTo("");
+    setTitle("");
+    setCategory("");
+    setDescription("");
   };
 
   return (
@@ -43,8 +46,8 @@ const CreateTask = () => {
           <div>
             <h3 className="text-sm text-gray-300 mb-0.5">Task Title</h3>
             <input
-              value={taskTitle}
-              onChange={(e) => setTaskTitle(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               className="text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-400 mb-4"
               type="text"
               placeholder="Make a UI Design"

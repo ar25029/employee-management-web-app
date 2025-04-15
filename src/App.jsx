@@ -3,13 +3,11 @@ import Login from "./components/Auth/Login";
 import EmployeeDashboard from "./components/Dashboard/EmployeeDashboard";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import { AuthContext } from "./context/AuthProvider";
-import NotFound from "./pages/NotFound";
-import { data } from "autoprefixer";
 
 export default function App() {
   const [user, setUser] = useState(null);
   const [loggedInUserData, setLoggedInUserData] = useState(null);
-  const authData = useContext(AuthContext);
+  const [userData] = useContext(AuthContext);
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("loggedInUser");
@@ -23,14 +21,14 @@ export default function App() {
   const handleLogin = (email, password) => {
     if (email == "admin@me.com" && password == "123") {
       setUser("admin");
-      const admin = authData.admin[0];
+      const admin = userData.admin[0];
       setLoggedInUserData(admin);
       localStorage.setItem(
         "loggedInUser",
         JSON.stringify({ role: "admin", data: admin })
       );
-    } else if (authData) {
-      const employee = authData.employees.find(
+    } else if (userData) {
+      const employee = userData.employees.find(
         (emp) => emp.email === email && emp.password === password
       );
       if (employee) {
@@ -49,9 +47,9 @@ export default function App() {
     <>
       {!user ? <Login handleLogin={handleLogin} /> : ""}
       {user == "admin" ? (
-        <AdminDashboard data={loggedInUserData} />
+        <AdminDashboard changeUser={setUser} data={loggedInUserData} />
       ) : user == "employee" ? (
-        <EmployeeDashboard data={loggedInUserData} />
+        <EmployeeDashboard changeUser={setUser} data={loggedInUserData} />
       ) : null}
     </>
   );

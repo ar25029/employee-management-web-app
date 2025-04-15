@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
-const Header = ({ data }) => {
+const Header = ({ data, changeUser }) => {
   const handleLogout = () => {
-    window.location.reload();
+    changeUser("");
+    loggedInUser("");
   };
 
   return (
